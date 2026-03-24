@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<!-- 
+===================================================
+CodePen Metadata Recommendations:
+
+Title: Fun Interactive Login Form (Giant Hover Characters)
+Description: A minimalist login form with a family of interactive characters on top, ranging from tiny to giant! They track your mouse, excitedly smile/gasp when hovering the username, nod while you type, and look away for your password!
+Tags: login, animation, svg, interactive, fun
+===================================================
+-->
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Interactive Login</title>
+    <style>
+        /* 
+===================================================
+   Interactive Fun Login CSS
+===================================================
+*/
+
+        :root {
+            --bg-color: #f7ede2;
+            /* Soft pastel background */
+            --card-bg: #ffffff;
+            --text-color: #2b2d42;
+            --primary: #f28482;
+            --primary-hover: #e56b6f;
+            --border-color: #e2e8f0;
+            --input-bg: #f8f9fa;
+            --shadow: 0 10px 30px rgba(43, 45, 66, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .login-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        /* =========================================
+   SVG Characters Container
+========================================= */
+        .characters-container {
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+            /* Behind the card slightly */
+        }
+
+        .top-characters {
+            height: 250px;
+            margin-bottom: -40px;
+            /* Pull the card over characters slightly */
+        }
+
+        svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        /* SVG Parts Classes */
+        .pupil {
+            transform-origin: center;
+        }
+
+        .mouth {
+            transition: d 0.3s ease;
+        }
+
+        /* =========================================
+   Login Form Card
+========================================= */
+        .login-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            padding: 0 20px;
+            z-index: 2;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .form-card h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            color: var(--text-color);
+        }
+
+        .form-card p {
+            font-size: 0.9rem;
+            color: #8d99ae;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #8d99ae;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background: var(--input-bg);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(242, 132, 130, 0.1);
+        }
+
+        button#loginBtn {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.2s;
+            box-shadow: 0 4px 10px rgba(242, 132, 130, 0.3);
+        }
+
+        button#loginBtn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(242, 132, 130, 0.4);
+        }
+
+        button#loginBtn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(242, 132, 130, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="login-wrapper">
+
+        <!-- Top Characters Container -->
+        <div class="characters-container top-characters">
+            <svg id="character-svg-top" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+
+                <!-- 1. Very Big Character (Left) -->
+                <g class="character" transform="translate(180, 160) scale(1.6)">
+                    <rect x="-40" y="-30" width="80" height="120" rx="40" fill="#a2d2ff" class="body" />
+                    <g class="eyes">
+                        <circle cx="-15" cy="-10" r="12" fill="white" />
+                        <circle cx="-15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                        <circle cx="15" cy="-10" r="12" fill="white" />
+                        <circle cx="15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                    </g>
+                    <path d="M -10 10 Q 0 15 10 10" stroke="#2b2d42" stroke-width="3" fill="none" stroke-linecap="round"
+                        class="mouth" />
+                </g>
+
+                <!-- 2. Very Big Character (Right) -->
+                <g class="character" transform="translate(620, 150) scale(1.5)">
+                    <rect x="-40" y="-30" width="80" height="120" rx="40" fill="#ffafcc" class="body" />
+                    <g class="eyes">
+                        <circle cx="-15" cy="-10" r="12" fill="white" />
+                        <circle cx="-15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                        <circle cx="15" cy="-10" r="12" fill="white" />
+                        <circle cx="15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                    </g>
+                    <path d="M -10 10 Q 0 15 10 10" stroke="#2b2d42" stroke-width="3" fill="none" stroke-linecap="round"
+                        class="mouth" />
+                </g>
+
+                <!-- 3. Medium Character -->
+                <g class="character" transform="translate(400, 190) scale(1.1)">
+                    <rect x="-40" y="-30" width="80" height="100" rx="40" fill="#fdf0d5" class="body" />
+                    <g class="eyes">
+                        <circle cx="-15" cy="-10" r="12" fill="white" />
+                        <circle cx="-15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                        <circle cx="15" cy="-10" r="12" fill="white" />
+                        <circle cx="15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                    </g>
+                    <path d="M -10 10 Q 0 15 10 10" stroke="#2b2d42" stroke-width="3" fill="none" stroke-linecap="round"
+                        class="mouth" />
+                </g>
+
+                <!-- 4. Small Character 1 -->
+                <g class="character" transform="translate(300, 220) scale(0.7)">
+                    <rect x="-40" y="-30" width="80" height="90" rx="40" fill="#caffbf" class="body" />
+                    <g class="eyes">
+                        <circle cx="-15" cy="-10" r="12" fill="white" />
+                        <circle cx="-15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                        <circle cx="15" cy="-10" r="12" fill="white" />
+                        <circle cx="15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                    </g>
+                    <path d="M -10 10 Q 0 15 10 10" stroke="#2b2d42" stroke-width="3" fill="none" stroke-linecap="round"
+                        class="mouth" />
+                </g>
+
+                <!-- 5. Small Character 2 -->
+                <g class="character" transform="translate(500, 210) scale(0.65)">
+                    <rect x="-40" y="-30" width="80" height="90" rx="40" fill="#cdb4db" class="body" />
+                    <g class="eyes">
+                        <circle cx="-15" cy="-10" r="12" fill="white" />
+                        <circle cx="-15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                        <circle cx="15" cy="-10" r="12" fill="white" />
+                        <circle cx="15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                    </g>
+                    <path d="M -10 10 Q 0 15 10 10" stroke="#2b2d42" stroke-width="3" fill="none" stroke-linecap="round"
+                        class="mouth" />
+                </g>
+
+                <!-- 6. Very Small Character -->
+                <g class="character" transform="translate(360, 240) scale(0.4)">
+                    <rect x="-40" y="-30" width="80" height="90" rx="40" fill="#ffc8dd" class="body" />
+                    <g class="eyes">
+                        <circle cx="-15" cy="-10" r="12" fill="white" />
+                        <circle cx="-15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                        <circle cx="15" cy="-10" r="12" fill="white" />
+                        <circle cx="15" cy="-10" r="5" fill="#2b2d42" class="pupil" />
+                    </g>
+                    <path d="M -10 10 Q 0 15 10 10" stroke="#2b2d42" stroke-width="3" fill="none" stroke-linecap="round"
+                        class="mouth" />
+                </g>
+
+            </svg>
+        </div>
+
+        <!-- The Login Form -->
+        <div class="login-container">
+            <div class="form-card" id="loginCard">
+                <h2>Welcome Back!</h2>
+                <p>Log in to continue</p>
+
+                <form id="loginForm" onsubmit="event.preventDefault();">
+
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" placeholder="Enter username..." autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" placeholder="Enter Email..." autocomplete="off">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" placeholder="•••••••••" autocomplete="off">
+                    </div>
+
+                    <button type="submit" id="loginBtn">Connect</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        /**
+     * Fun Interactive Login form script
+     * Uses GSAP for smooth character animations
+     */
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const usernameInput = document.getElementById('username');
+            const EmailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const loginBtn = document.getElementById('loginBtn');
+            const loginCard = document.getElementById('loginCard');
+
+            // Collect all characters dynamically
+            const characterElements = document.querySelectorAll('.character');
+            const charactersData = [];
+
+            characterElements.forEach(char => {
+                charactersData.push({
+                    el: char,
+                    pupils: char.querySelectorAll('.pupil'),
+                    mouth: char.querySelector('.mouth'),
+                    body: char.querySelector('.body')
+                });
+            });
+
+            // Base Expressions (SVG paths for mouths)
+            const mouthNeutral = "M -10 10 Q 0 15 10 10"; // slight curve
+            const mouthSmile = "M -12 8 Q 0 20 12 8";   // big smile
+            const mouthOoh = "M -4 12 Q 0 5 4 12 Q 0 16 -4 12"; // round mouth
+            const mouthFlat = "M -10 12 L 10 12";       // line
+            const mouthSurprise = "M 0 10 A 3 3 0 1 0 0 16 A 3 3 0 1 0 0 10"; // Little circle
+
+            // Track state
+            let isPasswordFocused = false;
+            let isUsernameHovered = false;
+
+            // --- 1. Mouse Tracking ---
+            document.addEventListener('mousemove', (e) => {
+                if (isPasswordFocused) return; // Don't track if looking away
+
+                const x = e.clientX;
+                const y = e.clientY;
+                const windowWidth = window.innerWidth;
+                const windowHeight = window.innerHeight;
+
+                // Calculate mapped positions for pupils
+                const moveX = (x / windowWidth - 0.5) * 8;
+                const moveY = (y / windowHeight - 0.5) * 8;
+
+                // Apply eyes follower to all characters
+                charactersData.forEach(char => {
+                    gsap.to(char.pupils, {
+                        x: moveX,
+                        y: moveY,
+                        duration: 0.2, // Quick follow
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+            // --- 2. Username Input (Hover: Surprise/Smile, Focus: Nod) ---
+            usernameInput.addEventListener('mouseenter', () => {
+                if (isPasswordFocused) return;
+                isUsernameHovered = true;
+
+                charactersData.forEach((char, index) => {
+                    // Alternate between smile and surprise based on index to make it fun
+                    if (index % 2 === 0) {
+                        gsap.to(char.mouth, { attr: { d: mouthSmile }, duration: 0.2 });
+                    } else {
+                        gsap.to(char.mouth, { attr: { d: mouthSurprise }, duration: 0.2 });
+                        // Also raise body slightly for surprised ones
+                        gsap.to(char.body, { y: -5, duration: 0.2 });
+                    }
+                });
+            });
+
+            usernameInput.addEventListener('mouseleave', () => {
+                isUsernameHovered = false;
+                if (isPasswordFocused || document.activeElement === usernameInput) return; // keep current state if busy
+
+                charactersData.forEach(char => {
+                    gsap.to(char.mouth, { attr: { d: mouthNeutral }, duration: 0.3 });
+                    gsap.to(char.body, { y: 0, duration: 0.3 });
+                });
+            });
+
+            usernameInput.addEventListener('focus', () => {
+                isPasswordFocused = false;
+
+                charactersData.forEach(char => {
+                    // Reset body if it was raised by hover
+                    gsap.to(char.body, { y: 0, duration: 0.1 });
+
+                    // Eyes look slightly down at the input field
+                    gsap.to(char.pupils, {
+                        x: 0, y: 5, duration: 0.3
+                    });
+
+                    // Small focused mouth
+                    gsap.to(char.mouth, {
+                        attr: { d: mouthOoh }, duration: 0.3
+                    });
+                });
+            });
+
+            // Nod when typing
+            usernameInput.addEventListener('input', () => {
+                charactersData.forEach(char => {
+                    gsap.fromTo(char.body,
+                        { y: 0 },
+                        { y: 6, duration: 0.1, yoyo: true, repeat: 1 }
+                    );
+                });
+            });
+
+            usernameInput.addEventListener('blur', () => {
+                if (isPasswordFocused) return;
+
+                charactersData.forEach(char => {
+                    gsap.to(char.pupils, { x: 0, y: 0, duration: 0.5 });
+                    if (!isUsernameHovered) {
+                        gsap.to(char.mouth, { attr: { d: mouthNeutral }, duration: 0.3 });
+                    }
+                });
+            });
+            // --- 2. Username Input (Hover: Surprise/Smile, Focus: Nod) ---
+            EmailInput.addEventListener('mouseenter', () => {
+                if (isPasswordFocused) return;
+                isUsernameHovered = true;
+
+                charactersData.forEach((char, index) => {
+                    // Alternate between smile and surprise based on index to make it fun
+                    if (index % 2 === 0) {
+                        gsap.to(char.mouth, { attr: { d: mouthSmile }, duration: 0.2 });
+                    } else {
+                        gsap.to(char.mouth, { attr: { d: mouthSurprise }, duration: 0.2 });
+                        // Also raise body slightly for surprised ones
+                        gsap.to(char.body, { y: -5, duration: 0.2 });
+                    }
+                });
+            });
+
+            EmailInput.addEventListener('mouseleave', () => {
+                isUsernameHovered = false;
+                if (isPasswordFocused || document.activeElement === usernameInput) return; // keep current state if busy
+
+                charactersData.forEach(char => {
+                    gsap.to(char.mouth, { attr: { d: mouthNeutral }, duration: 0.3 });
+                    gsap.to(char.body, { y: 0, duration: 0.3 });
+                });
+            });
+
+            EmailInput.addEventListener('focus', () => {
+                isPasswordFocused = false;
+
+                charactersData.forEach(char => {
+                    // Reset body if it was raised by hover
+                    gsap.to(char.body, { y: 0, duration: 0.1 });
+
+                    // Eyes look slightly down at the input field
+                    gsap.to(char.pupils, {
+                        x: 0, y: 5, duration: 0.3
+                    });
+
+                    // Small focused mouth
+                    gsap.to(char.mouth, {
+                        attr: { d: mouthOoh }, duration: 0.3
+                    });
+                });
+            });
+
+            // Nod when typing
+            EmailInput.addEventListener('input', () => {
+                charactersData.forEach(char => {
+                    gsap.fromTo(char.body,
+                        { y: 0 },
+                        { y: 6, duration: 0.1, yoyo: true, repeat: 1 }
+                    );
+                });
+            });
+
+            EmailInput.addEventListener('blur', () => {
+                if (isPasswordFocused) return;
+
+                charactersData.forEach(char => {
+                    gsap.to(char.pupils, { x: 0, y: 0, duration: 0.5 });
+                    if (!isUsernameHovered) {
+                        gsap.to(char.mouth, { attr: { d: mouthNeutral }, duration: 0.3 });
+                    }
+                });
+            });
+
+            // --- 3. Password Input (Look Away) ---
+            passwordInput.addEventListener('focus', () => {
+                isPasswordFocused = true;
+
+                charactersData.forEach((char, index) => {
+                    // Alternate looking left/right
+                    let lookDistX = (index % 2 === 0) ? -7 : 7;
+
+                    gsap.to(char.pupils, { x: lookDistX, y: -7, duration: 0.5, ease: "power2.inOut" });
+
+                    // Nervous/Flat mouths
+                    gsap.to(char.mouth, {
+                        attr: { d: mouthFlat },
+                        duration: 0.3
+                    });
+
+                    // Blush effect
+                    let currentColor = char.body.getAttribute('fill');
+                    gsap.to(char.body, { fill: shadeColor(currentColor, -10), duration: 0.3 });
+                    char.body.dataset.originalFill = currentColor;
+                });
+            });
+
+            passwordInput.addEventListener('blur', () => {
+                isPasswordFocused = false;
+
+                charactersData.forEach(char => {
+                    // Reset colors
+                    let original = char.body.dataset.originalFill || char.body.getAttribute('fill');
+                    gsap.to(char.body, { fill: original, duration: 0.3 });
+
+                    // Reset look
+                    gsap.to(char.pupils, {
+                        x: 0, y: 0, duration: 0.5
+                    });
+                    gsap.to(char.mouth, {
+                        attr: { d: mouthNeutral }, duration: 0.3
+                    });
+                });
+            });
+
+            // --- 4. Login Button Click (Jump for joy!) ---
+            loginBtn.addEventListener('click', () => {
+
+                charactersData.forEach((char, index) => {
+                    // Big Smiles
+                    gsap.to(char.mouth, {
+                        attr: { d: mouthSmile },
+                        duration: 0.2
+                    });
+
+                    // Eyes looking happy
+                    gsap.to(char.pupils, {
+                        x: 0, y: -2, duration: 0.2
+                    });
+
+                    // Jump animation
+                    gsap.to(char.el, {
+                        y: -50, // Jump UP
+                        duration: 0.3,
+                        yoyo: true,
+                        repeat: 3,
+                        delay: index * 0.05, // Domino effect!
+                        ease: "sine.inOut",
+                        onComplete: () => {
+                            gsap.set(char.el, { y: 0 });
+                        }
+                    });
+                });
+
+                // Show a success message
+                loginBtn.textContent = "Success!";
+                loginBtn.style.backgroundColor = "#52b788";
+
+                setTimeout(() => {
+                    loginBtn.textContent = "Connect";
+                    loginBtn.style.backgroundColor = ""; // Reset
+                }, 2000);
+            });
+
+            // Utility: Shade color for blushing/nervous
+            function shadeColor(color, percent) {
+                let R = parseInt(color.substring(1, 3), 16);
+                let G = parseInt(color.substring(3, 5), 16);
+                let B = parseInt(color.substring(5, 7), 16);
+
+                R = parseInt(R * (100 + percent) / 100);
+                G = parseInt(G * (100 + percent) / 100);
+                B = parseInt(B * (100 + percent) / 100);
+
+                R = (R < 255) ? R : 255;
+                G = (G < 255) ? G : 255;
+                B = (B < 255) ? B : 255;
+
+                let RR = ((R.toString(16).length == 1) ? "0" + R.toString(16) : R.toString(16));
+                let GG = ((G.toString(16).length == 1) ? "0" + G.toString(16) : G.toString(16));
+                let BB = ((B.toString(16).length == 1) ? "0" + B.toString(16) : B.toString(16));
+
+                return "#" + RR + GG + BB;
+            }
+        });
+
+    </script>
+</body>
+
+
+<script src="./23-03-26.js"></script>
+
+</html>

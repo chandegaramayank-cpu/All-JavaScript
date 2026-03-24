@@ -76,9 +76,11 @@ form.addEventListener("submit", (e) => {
     Users.push(obj)
 
     localStorage.setItem("Users", JSON.stringify(Users))
+    window.location.href = "23-03-26.html"
 
     clearForm()
     console.log("All Users :", Users)
+
     Table()
 })
 
