@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+
+        :root {
+            --background-color: #edf2fb;
+            --text-color: #2D67D1;
+            --hover-text-color: #edf2fb;
+            --effect-color: #2D67D1;
+            --line-color: #565664;
+        }
+
+        /* 🔴 Logout Button */
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #2D67D1;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        .logout-btn:hover {
+            background-color: #1a4fb0;
+        }
+
+        .hero-section {
+            background-color: var(--background-color);
+            font-family: "Montserrat", sans-serif;
+            width: 100%;
+            height: 1000px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .text-container {
+            z-index: 20;
+            text-align: center;
+            position: relative;
+        }
+
+        @media (max-width: 999px) {
+            .text-container {
+                display: none;
+            }
+        }
+
+        .text {
+            font-size: 5.9rem;
+            color: var(--text-color);
+            letter-spacing: -0.01em;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            display: block;
+            margin: 0;
+            line-height: 1;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+        }
+
+        .split-parent {
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+        }
+
+        .split-child {
+            display: inline-block;
+            transform: translateY(100%);
+            transition: transform 0.9s ease;
+        }
+
+        .text-emerged .split-child {
+            transform: translateY(0);
+        }
+
+        .text-effect {
+            position: absolute;
+            inset: -4px;
+            z-index: 0;
+            background-color: var(--effect-color);
+            clip-path: polygon(0 50%, 100% 50%, 100% 50%, 0 50%);
+            transition: 0.4s;
+        }
+
+        .text:hover .text-effect {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .text:hover {
+            color: var(--hover-text-color);
+        }
+
+        .circular-layout {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            width: 600px;
+        }
+
+        @media (max-width: 999px) {
+            .circular-layout {
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .circular-item {
+                width: 336px;
+                height: 272px;
+            }
+        }
+
+        @media (min-width: 1000px) {
+            .circular-layout {
+                height: 600px;
+            }
+
+            .circular-item {
+                position: absolute;
+                width: 336px;
+                height: 272px;
+                transform: translate(-50%, -50%);
+            }
+
+            .circular-item:nth-child(1) {
+                top: 36%;
+                left: -7.6%;
+            }
+
+            .circular-item:nth-child(2) {
+                top: 16%;
+                left: 110%;
+            }
+
+            .circular-item:nth-child(3) {
+                top: 95%;
+                left: 44%;
+            }
+        }
+
+        .custom-component {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🔴 Logout Button -->
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+
+    <div class="hero-section">
+        <div class="text-container">
+            <h1 class="text">
+                <div class="split-parent">
+                    <div class="split-child">THE</div>
+                </div>
+                <span class="text-effect"></span>
+            </h1>
+            <h1 class="text">
+                <div class="split-parent">
+                    <div class="split-child">STUNNING</div>
+                </div>
+                <span class="text-effect"></span>
+            </h1>
+            <h1 class="text">
+                <div class="split-parent">
+                    <div class="split-child">CITIES</div>
+                </div>
+                <span class="text-effect"></span>
+            </h1>
+        </div>
+
+        <div class="circular-layout">
+            <div class="circular-item">
+                <div class="custom-component"
+                    style="background-image:url('https://images.unsplash.com/photo-1580536792511-b3cc93006b70'); background-size:cover;">
+                </div>
+            </div>
+
+            <div class="circular-item">
+                <div class="custom-component"
+                    style="background-image:url('https://cdn.pixabay.com/photo/2016/12/13/21/44/urban-1905188_960_720.jpg'); background-size:cover;">
+                </div>
+            </div>
+
+            <div class="circular-item">
+                <div class="custom-component"
+                    style="background-image:url('https://images.unsplash.com/photo-1559924045-b8679054d4c7'); background-size:cover;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+<script src="./script.js"></script>
+
+</html>
