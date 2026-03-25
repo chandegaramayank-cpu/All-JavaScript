@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+img {
+    height: 100px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  
+}
+
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+
+    25% {
+        transform: translateY(-80px);
+        /* jump up */
+    }
+
+    50% {
+        transform: translateY(0);
+        /* land */
+    }
+
+    75% {
+        transform: translateY(-40px);
+        /* small bounce */
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
